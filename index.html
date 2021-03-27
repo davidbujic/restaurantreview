@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+
+        <title>Restaurant review</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+            <a class="navbar-brand" href="index.html"> 
+                <img src="img/logo.png" width="60" height="60" alt="">
+                Restaurant review
+            </a>
+            <span class="navbar-text">
+                Check out the best restaurant review website available!
+            </span>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </nav>
+        <div class="inline" id="map"></div>
+
+        <script type="text/javascript">
+            var restaurants = [
+                {
+                    "restaurantName": "Anton",
+                    "address": "Jovana Skerlica 16",
+                    "latitude": "43.32169246600915",
+                    "longitude": "21.907122896559628",
+                    "reviews":[
+                        {
+                            "stars": 5,
+                            "comment": "The best burek in Serbia!"
+                        },
+                        {
+                            "stars": 3,
+                            "comment": "Supposedly the best burek in Niš, but I'm not that impressed. Depends on your taste buds."
+                        }
+                    ]
+                },
+                {
+                    "restaurantName": "Dusanov konak",
+                    "address": "Dusanova",
+                    "latitude": "43.31852340383029",
+                    "longitude": "21.9059641822025",
+                    "reviews":[
+                        {
+                            "stars": 5,
+                            "comment": "Great place nice view over the city. Good food really nice people."
+                        },
+                        {
+                            "stars": 4,
+                            "comment": "Nice and cheap place in Nis. The style is a mix between typical Balkan rustic and modern Chinese lights. Service was excellent!"
+                        }
+                    ]
+                },
+                {
+                    "restaurantName": "ChaIRSKI Rock N Sports Cafe",
+                    "address": "Ratka Vukicevica 5a",
+                    "latitude": "43.31563519835915",
+                    "longitude": "21.902230547295556",
+                    "reviews":[
+                        {
+                            "stars": 5,
+                            "comment": "The best ambiance, the most delicious food, the finest wine, the most hospitable staff. Loving this place."
+                        },
+                        {
+                            "stars": 1,
+                            "comment": "Maybe my experience was unique, but I waited for a simple pancake for more than an hour while other tables were served in minutes."
+                        }
+                    ]
+                },
+                {
+                    "restaurantName": "Kafana Meze",
+                    "address": "Koste Stamenkovica 3",
+                    "latitude": "43.317710930075236",
+                    "longitude": "21.89782099418848",
+                    "reviews": [
+                        {
+                            "stars": 4,
+                            "comment": "Good food and atmosphere, a mix of old and modern tavern."
+                        },
+                        {
+                            "stars": 5,
+                            "comment": "Great place to eat and try local food, also enjoy local culture. Good price and great quality of food."
+                        }
+                    ] 
+                },
+                {
+                    "restaurantName": "RetroBar caffe bar & restaurant",
+                    "address": "Prvomajska 9",
+                    "latitude": "43.31837538351664",
+                    "longitude": "21.903127319630496",
+                    "reviews": [
+                        {
+                            "stars": 5,
+                            "comment": "Excelent food! Nice and very friendly staff ! Owner is not married so I suggest him to all free girls!:))))"
+                        },
+                        {
+                            "stars": 4,
+                            "comment": "Good coffee and standard prices."
+                        }
+                    ]
+                }
+            ]
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: new google.maps.LatLng(43.321642917811225, 21.89536738402475),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var infowindow = new google.maps.InfoWindow();
+
+            var marker, i;
+
+            for (i = 0; i < restaurants.length; i++) {  
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(restaurants[i].latitude, restaurants[i].longitude),
+                map: map
+            });
+
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                infowindow.setContent("<p>" + "Restaurant name: " + restaurants[i].restaurantName + "<br>" + 
+                "Restaurant address: " + restaurants[i].address + "</p>");
+                infowindow.open(map, marker);
+                }
+            })(marker, i));
+            }
+        </script>
+        <h3>Restaurant list</h3>
+        <div class="inline" id="reviews">
+            <div class="d-flex p-2 flex-column">
+                <div class="card border-secondary text-center">
+                    <img class="card-img-top mx-auto" src="img/anton.jpg" alt="Anton">
+                    <div class="card-body text-info">
+                        <h4 class="card-title">Pekara Anton</h4>
+                        <p class="card-text">Address: Jovana Skerlica 16</p>
+                        <p class="card-text">Reviews:</p>
+                        <div>
+                            <p class="card-text">The best burek in Serbia!</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </div>
+                        <br>
+                        <div>
+                            <p class="card-text">Supposedly the best burek in Niš, but I'm not that impressed. Depends on your taste buds.</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex p-2 flex-column">
+                <div class="card border-secondary text-center">
+                    <img class="card-img-top mx-auto" src="img/dusanovkonak.jpg" alt="Dusanov konak">
+                    <div class="card-body text-info">
+                        <h4 class="card-title">Dusanov konak</h4>
+                        <p class="card-text">Address: Dusanova</p>
+                        <p class="card-text">Reviews:</p>
+                        <div>
+                            <p class="card-text">Great place nice view over the city. Good food really nice people.</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </div>
+                        <br>
+                        <div>
+                            <p class="card-text">Nice and cheap place in Nis. The style is a mix between typical Balkan rustic and modern Chinese lights. Service was excellent!</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex p-2 flex-column">
+                <div class="card border-secondary text-center">
+                    <img class="card-img-top mx-auto" src="img/chairski.jpg" alt="ChaIRSKI Rock N Sports Cafe">
+                    <div class="card-body text-info">
+                        <h4 class="card-title">ChaIRSKI Rock N Sports Cafe</h4>
+                        <p class="card-text">Address: Ratka Vukicevica 5a</p>
+                        <p class="card-text">Reviews:</p>
+                        <div>
+                            <p class="card-text">The best ambiance, the most delicious food, the finest wine, the most hospitable staff. Loving this place.</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </div>
+                        <br>
+                        <div>
+                            <p class="card-text">Maybe my experience was unique, but I waited for a simple pancake for more than an hour while other tables were served in minutes.</p>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex p-2 flex-column">
+                <div class="card border-secondary text-center">
+                    <img class="card-img-top mx-auto" src="img/meze.jpg" alt="Kafana Meze">
+                    <div class="card-body text-info">
+                        <h4 class="card-title">Kafana Meze</h4>
+                        <p class="card-text">Address: Koste Stamenkovica 3</p>
+                        <p class="card-text">Reviews:</p>
+                        <div>
+                            <p class="card-text">Good food and atmosphere, a mix of old and modern tavern.</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                        <br>
+                        <div>
+                            <p class="card-text">Great place to eat and try local food, also enjoy local culture. Good price and great quality of food.</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex p-2 flex-column">
+                <div class="card border-secondary text-center">
+                    <img class="card-img-top mx-auto" src="img/retro.jpg" alt="RetroBar caffe bar & restaurant">
+                    <div class="card-body text-info">
+                        <h4 class="card-title">RetroBar caffe bar & restaurant</h4>
+                        <p class="card-text">Address: Prvomajska 9</p>
+                        <p class="card-text">Reviews:</p>
+                        <div>
+                            <p class="card-text">Excelent food! Nice and very friendly staff ! Owner is not married so I suggest him to all free girls!:))))</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                        </div>
+                        <br>
+                        <div>
+                            <p class="card-text">Good coffee and standard prices.</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
